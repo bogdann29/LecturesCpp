@@ -10,6 +10,11 @@ struct TString{
 
     template <char... T>
     constexpr bool operator==(const TString<T...>& other) const {
+        if(size != other.size)
+            return false;
+        for(int i = 0; i < size; ++i)
+            if(val[i] != other.val[i])
+                return false;
         return true;
     }
 };
@@ -25,7 +30,8 @@ constexpr TString<c...> operator "" _s(){
 }
 
 int main(){
-    constexpr auto hello = "hello"_s + "world"_s;
+    constexpr auto hello = "hello"_s + " world"_s;
     static_assert(hello == "hello world"_s);
+    static_assert(!(hello == "lozhkin"_s));
     return 0;
 }
